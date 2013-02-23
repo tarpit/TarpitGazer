@@ -12,9 +12,9 @@ function S(x) {
     }
 }
 
-function compile_jot(s) {
+function eval_jot(s) {
     if(s.length > 1) {
-        F = compile_jot(s.substr(0, s.length - 1));
+        F = eval_jot(s.substr(0, s.length - 1));
 
         if(s[s.length - 1] == '0') {
             return F(S)(K);
@@ -47,22 +47,24 @@ function S_cps(x, k) {
     });
 }
 
-//function compile_jot_cps(s) {
-//    if(s.length > 1) {
-//        F = compile_jot_cps(s.substr(0, s.length - 1));
-//
-//        if(s[s.length - 1] == '0') {
-//            return F(S, function (FS) { return Fs(K, k); });
-//        }
-//        else if(s[s.length - 1] == '1') {
-//            return S(K(F));
-//        }
-//        else {
-//            console.error("Error parsing " + s);
-//        }
-//    }
-//    else return S(K)(K); // I
-//}
+function eval_jot_cps(s, k) {
+    if(s.length > 1) {
+        return eval_jot_cps(
+            s.substr(0, s.length - 1),
+            function(F) {
+                if(s[s.length - 1] == '0') {
+                    return F(S_cps, function (FS) { return FS(K_cps, k); });
+                }
+                else if(s[s.length - 1] == '1') {
+                    return K_cps(F, function (KF) { return S_cps(KF, k); });
+                }
+                else {
+                    console.error("Error parsing " + s);
+                }
+            });
+    }
+    else return S_cps(K_cps, function (SK) { return SK(K_cps, k); }); // I
+}
 
 function encode_jot(s) {
     var x = 0.5;
