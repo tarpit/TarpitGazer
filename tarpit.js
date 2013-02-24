@@ -223,7 +223,7 @@ function render(c) {
     var ctx = c.getContext("2d");
     
     var limit = 200;
-    var N = 512;
+    var N = 32;
     var w = c.width / N;
 
     var log2 = Math.log(2);

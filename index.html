@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Gazing into the Turing Tarpit</title>
+    <title>Visualizing the Turing Tarpit</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body onload="render(document.getElementById('#tarpit'))">
-    <canvas id="#tarpit" width="600" height="600"></canvas>
+    <h1>Visualizing the Turing Tarpit</h1>
+    <div class="row">
+      <div class="span8 offset1">
+        <canvas id="#tarpit" width="600" height="600"></canvas>
+      </div>
+      <div class="span3">
+        Controls will go here.
+      </div>
+    </div>
+
     <script src="tarpit.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
