@@ -223,12 +223,13 @@ function render(c) {
     var ctx = c.getContext("2d");
     
     var limit = 200;
-    var N = 32;
+    var res = parseInt(document.getElementById('resolution').value);
+    var N = 1 << res;
     var w = c.width / N;
 
     var log2 = Math.log(2);
 
-    for(var i = 0; i < N; i++) {
+    var render_col = function(i) {
         for(var j = 0; j < N; j++) {
             //console.info("" + i + ", " + j);
             var p = xy2d(N, i, j);
@@ -249,7 +250,16 @@ function render(c) {
                 ctx.fillStyle = "#FF0000";
             }
 
-            ctx.fillRect(i * w, j * w, (i + 1) * w, (j + 1) * w);
+            ctx.fillRect(i * w, j * w, w + 1, w + 1);
+        }
+    };
+
+    var render_loop = function(i) {
+        render_col(i);
+        if(i < N) {
+            window.setTimeout(render_loop, 0, i + 1);
         }
     }
+
+    render_loop(0);
 }

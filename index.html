@@ -11,7 +11,18 @@
         <canvas id="#tarpit" width="600" height="600"></canvas>
       </div>
       <div class="span3">
-        Controls will go here.
+        <form action="#">
+          <fieldset>
+            <legend>Controls</legend>
+            <label>Resolution</label>
+            <input type="number" value="5" id="resolution">
+
+            <button class="btn"
+                    onclick="render(document.getElementById('#tarpit'))">
+              Redraw
+            </button>
+          </fieldset>
+        </form>
       </div>
     </div>
 
