@@ -5,24 +5,28 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body onload="render(document.getElementById('#tarpit'))">
-    <h1>Visualizing the Turing Tarpit</h1>
-    <div class="row">
-      <div class="span8 offset1">
-        <canvas id="#tarpit" width="600" height="600"></canvas>
+    <div class="container">
+      <div class="row">
+        <h1>Visualizing the Turing Tarpit</h1>
       </div>
-      <div class="span3">
-        <form action="#">
-          <fieldset>
-            <legend>Controls</legend>
-            <label>Resolution</label>
-            <input type="number" value="5" id="resolution">
-
-            <button class="btn"
-                    onclick="render(document.getElementById('#tarpit'))">
-              Redraw
-            </button>
-          </fieldset>
-        </form>
+      <div class="row">
+        <div class="span8">
+          <canvas id="#tarpit" width="600" height="600"></canvas>
+        </div>
+        <div class="span3">
+          <form action="#">
+            <fieldset>
+              <legend>Controls</legend>
+              <label>Resolution</label>
+              <input type="number" value="5" id="resolution">
+              
+              <button class="btn"
+                      onclick="render(document.getElementById('#tarpit'))">
+                Redraw
+              </button>
+            </fieldset>
+          </form>
+        </div>
       </div>
     </div>
 
