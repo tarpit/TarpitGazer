@@ -4,7 +4,7 @@
     <title>Visualizing the Turing Tarpit</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
   </head>
-  <body onload="render(document.getElementById('#tarpit'))">
+  <body>
     <div class="container">
       <div class="row">
         <h1>Visualizing the Turing Tarpit</h1>
@@ -21,16 +21,19 @@
               <input type="number" value="5" id="resolution">
               
               <button class="btn"
-                      onclick="render(document.getElementById('#tarpit'))">
+                      onclick="compute();">
                 Redraw
               </button>
             </fieldset>
           </form>
+          <div class="progress progress-striped">
+            <div id='render_progress' class="bar" style="width: 0%;"></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <script src="tarpit.js"></script>
+    <script src="tarpit-host.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

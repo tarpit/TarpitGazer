@@ -218,48 +218,36 @@ function xy2d(n, x, y) {
 }
 
 // And here's my own drawing function
-function render(c) {
-    //alert("hi");
-    var ctx = c.getContext("2d");
-    
-    var limit = 200;
-    var res = parseInt(document.getElementById('resolution').value);
+function render(limit, res) {
     var N = 1 << res;
-    var w = c.width / N;
 
-    var log2 = Math.log(2);
+    var data = new Int32Array(N * N);
 
-    var render_col = function(i) {
+    for(var i = 0; i < N; i++) {
         for(var j = 0; j < N; j++) {
-            //console.info("" + i + ", " + j);
             var p = xy2d(N, i, j);
-            //console.info(p);
             p /= N * N;
             p = decode_jot(p);
-            //console.info("Evaluating " + p);
             var c = drive_cpst(p, limit);
-            //console.info("" + p + " " + c);
-            if(c < limit) {
-                c /= limit;
-                //c = Math.log(c + 1);
-                c = Math.log(c + 1) / log2;
-                c = Math.floor(c * 256);
-                ctx.fillStyle = "rgb(" + c + ", " + c + ", " + c + ")";
-            }
-            else {
-                ctx.fillStyle = "#FF0000";
-            }
 
-            ctx.fillRect(i * w, j * w, w + 1, w + 1);
+            data[i * N + j] = c;
         }
-    };
-
-    var render_loop = function(i) {
-        render_col(i);
-        if(i < N) {
-            window.setTimeout(render_loop, 0, i + 1);
-        }
+        postMessage({cmd: 'progress', 'percent': i * 100 / N});
     }
 
-    render_loop(0);
+    return data;
 }
+
+addEventListener('message', function(m) {
+    var m = m.data;
+    switch(m.cmd) {
+        case 'render':
+        var data = render(m.limit, m.res);
+        postMessage({cmd: 'complete',
+                     'data': data,
+                     limit: m.limit,
+                     res: m.res});
+        break;
+    }
+});
+
