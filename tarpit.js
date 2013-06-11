@@ -217,6 +217,40 @@ function xy2d(n, x, y) {
     return d;
 }
 
+//convert d to (x,y)
+function d2xy(n, d) {
+    var rx, ry, s, t;
+    
+    t = d;
+    x = 0;
+    y = 0;
+
+   function rot() {
+        if (ry == 0) {
+            if (rx == 1) {
+                x = n-1 - x;
+                y = n-1 - y;
+            }
+            
+            //Swap x and y
+            var t = x;
+            x = y;
+            y = t;
+        }
+    }
+    
+    for (s=1; s<n; s*=2) {
+        rx = 1 & (t/2);
+        ry = 1 & (t ^ rx);
+        rot(s, x, y, rx, ry);
+        x += s * rx;
+        y += s * ry;
+        t /= 4;
+    }
+
+    return [x, y];
+}
+
 // And here's my own drawing function
 function render(limit, res) {
     var N = 1 << res;
@@ -238,16 +272,69 @@ function render(limit, res) {
     return data;
 }
 
-addEventListener('message', function(m) {
-    var m = m.data;
-    switch(m.cmd) {
-        case 'render':
-        var data = render(m.limit, m.res);
-        postMessage({cmd: 'complete',
-                     'data': data,
-                     limit: m.limit,
-                     res: m.res});
-        break;
-    }
-});
+//addEventListener('message', function(m) {
+//    var m = m.data;
+//    switch(m.cmd) {
+//        case 'render':
+//        var data = render(m.limit, m.res);
+//        postMessage({cmd: 'complete',
+//                     'data': data,
+//                     limit: m.limit,
+//                     res: m.res});
+//        break;
+//    }
+//});
 
+function randomBits(N) {
+    var s = ""
+    for(var i = 0; i < N; i++) {
+        s += Math.floor(Math.random() + 0.5);
+    }
+    return s;
+}
+
+// taken from http://billmill.org/static/canvastutorial/ball.html
+function fillCircle(ctx, cx, cy, r) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.fill();
+}
+
+function startup() { 
+    var c = document.getElementById('#tarpit');
+    var cx = c.getContext("2d");
+
+    var N = 512;
+    var limit = 1000;
+
+    var max_len = 1;
+
+    var scale = c.width / N;
+
+    function drawPoints() {
+        var prog = randomBits(Math.floor(Math.random() * max_len + 1));
+        
+        var count = drive_cpst(prog, limit);
+
+        var pos = d2xy(N, encode_jot(prog) * N * N);
+        
+        var color = count / limit;
+        color = Math.floor(color * 256);
+
+        cx.fillStyle = "rgba(" + color + ", " + color + ", " + color + ", 0.5)";
+
+        fillCircle(cx, pos[0] * scale, pos[1] * scale, 5);
+
+        //console.info("Plotting " + prog);
+        //console.info(color);
+        //console.info(pos);
+
+        max_len += 1;
+        window.setTimeout(drawPoints, 0);
+    }
+
+    window.setTimeout(drawPoints, 0);
+}
+
+startup();
