@@ -218,37 +218,36 @@ function xy2d(n, x, y) {
 }
 
 //convert d to (x,y)
-function d2xy(n, d) {
-    var rx, ry, s, t;
-    
-    t = d;
-    x = 0;
-    y = 0;
+// This is adapted from http://bit-player.org/2013/mapping-the-hilbert-curve
+function d2xy(d) {
+    var pt, t, x, y;
 
-   function rot() {
-        if (ry == 0) {
-            if (rx == 1) {
-                x = n-1 - x;
-                y = n-1 - y;
-            }
+    if(d == 0)
+        return [0.5, 0.5];
+    else {
+        t = Math.floor(d * 4);
+        pt = d2xy(d * 4 - t);
+        x = pt[0];
+        y = pt[1];
+
+        switch(t) {
+            case 0:
+            return [y * .5, x * .5];
             
-            //Swap x and y
-            var t = x;
-            x = y;
-            y = t;
+            case 1:
+            return [x * .5, y * .5 + .5];
+            
+            case 2:
+            return [x * .5 + .5, y * .5 + .5];
+
+            case 3:
+            return [y * -.5 + 1, x * -.5 + .5];
         }
-    }
-    
-    for (s=1; s<n; s*=2) {
-        rx = 1 & (t/2);
-        ry = 1 & (t ^ rx);
-        rot(s, x, y, rx, ry);
-        x += s * rx;
-        y += s * ry;
-        t /= 4;
+
+        console.info(t);
     }
 
-    return [x, y];
+    console.info("This shouldn't have happened.");
 }
 
 // And here's my own drawing function
@@ -305,33 +304,54 @@ function startup() {
     var c = document.getElementById('#tarpit');
     var cx = c.getContext("2d");
 
+    cx.lineWidth = 1;
+
     var N = 512;
     var limit = 1000;
 
     var max_len = 1;
 
-    var scale = c.width / N;
+    var scale = c.width;
+
+    var old_pos = false;
 
     function drawPoints() {
-        var prog = randomBits(Math.floor(Math.random() * max_len + 1));
+        //var prog = randomBits(Math.floor(Math.random() * max_len + 1));
+        //
+        //var count = drive_cpst(prog, limit);
+
+        //var pos = d2xy(N, encode_jot(prog) * N * N);
         
-        var count = drive_cpst(prog, limit);
+        var pos= d2xy(max_len / N / N);
 
-        var pos = d2xy(N, encode_jot(prog) * N * N);
-        
-        var color = count / limit;
-        color = Math.floor(color * 256);
+        //var color = count / limit;
+        //color = Math.floor(color * 256);
 
-        cx.fillStyle = "rgba(" + color + ", " + color + ", " + color + ", 0.5)";
+        //cx.fillStyle = "rgba(" + color + ", " + color + ", " + color + ", 0.5)";
 
-        fillCircle(cx, pos[0] * scale, pos[1] * scale, 5);
+        cx.fillStyle = "hsl(" + max_len * 360 / N / N + ", 100%, 50%)";
+        cx.strokeStyle = "hsl(" + max_len * 360 / N / N + ", 100%, 50%)";
+
+        if(old_pos != false) {
+            cx.beginPath();
+            cx.moveTo(old_pos[0] * scale, old_pos[1] * scale);
+            cx.lineTo(pos[0] * scale, pos[1] * scale);
+            cx.stroke();
+            cx.closePath();
+        }
+        old_pos = pos;
+
+        fillCircle(cx, pos[0] * scale, pos[1] * scale, 2);
 
         //console.info("Plotting " + prog);
         //console.info(color);
         //console.info(pos);
 
         max_len += 1;
-        window.setTimeout(drawPoints, 0);
+        if(max_len < N * N)
+            window.setTimeout(drawPoints, 0);
+        else
+            console.info("All done!");
     }
 
     window.setTimeout(drawPoints, 0);
