@@ -307,7 +307,7 @@ function startup() {
     cx.lineWidth = 1;
 
     var N = 128;
-    var limit = 1000;
+    var limit = 10000;
 
     var max_radius = c.width / 10;
     var max_len = 1;
@@ -330,7 +330,11 @@ function startup() {
             
             //cx.fillStyle = "rgba(" + color + ", " + color + ", " + color + ", 0.5)";
             
-            cx.fillStyle = "hsl(" + color + ", 100%, 50%)";
+            if(count == limit)
+                cx.fillStyle = "rgb(0, 0, 0)";
+            else
+                cx.fillStyle = "hsl(" + color + ", 100%, 50%)";
+
             //cx.strokeStyle = "hsl(" + max_len * 360 / N / N + ", 100%, 50%)";
             
             //if(old_pos != false) {
@@ -343,7 +347,8 @@ function startup() {
             //old_pos = pos;
             
             //var radius = Math.max(1, max_radius / (1 + Math.log(length)));
-            var radius = 1;
+            //var radius = 1;
+            var radius = count * 10 / limit;
             
             fillCircle(cx, pos[0] * scale, pos[1] * scale,
                        radius);
