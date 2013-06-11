@@ -306,7 +306,7 @@ function startup() {
 
     cx.lineWidth = 1;
 
-    var N = 512;
+    var N = 128;
     var limit = 1000;
 
     var max_len = 1;
@@ -316,30 +316,28 @@ function startup() {
     var old_pos = false;
 
     function drawPoints() {
-        //var prog = randomBits(Math.floor(Math.random() * max_len + 1));
-        //
-        //var count = drive_cpst(prog, limit);
-
-        //var pos = d2xy(N, encode_jot(prog) * N * N);
+        var prog = randomBits(Math.floor(Math.random() * max_len + 1));
         
-        var pos= d2xy(max_len / N / N);
+        var count = drive_cpst(prog, limit);
 
-        //var color = count / limit;
-        //color = Math.floor(color * 256);
+        var pos = d2xy(encode_jot(prog));
+        
+        var color = count / limit;
+        color = Math.floor(color * 256);
 
         //cx.fillStyle = "rgba(" + color + ", " + color + ", " + color + ", 0.5)";
 
         cx.fillStyle = "hsl(" + max_len * 360 / N / N + ", 100%, 50%)";
-        cx.strokeStyle = "hsl(" + max_len * 360 / N / N + ", 100%, 50%)";
+        //cx.strokeStyle = "hsl(" + max_len * 360 / N / N + ", 100%, 50%)";
 
-        if(old_pos != false) {
-            cx.beginPath();
-            cx.moveTo(old_pos[0] * scale, old_pos[1] * scale);
-            cx.lineTo(pos[0] * scale, pos[1] * scale);
-            cx.stroke();
-            cx.closePath();
-        }
-        old_pos = pos;
+        //if(old_pos != false) {
+        //    cx.beginPath();
+        //    cx.moveTo(old_pos[0] * scale, old_pos[1] * scale);
+        //    cx.lineTo(pos[0] * scale, pos[1] * scale);
+        //    cx.stroke();
+        //    cx.closePath();
+        //}
+        //old_pos = pos;
 
         fillCircle(cx, pos[0] * scale, pos[1] * scale, 2);
 
@@ -348,10 +346,11 @@ function startup() {
         //console.info(pos);
 
         max_len += 1;
-        if(max_len < N * N)
-            window.setTimeout(drawPoints, 0);
-        else
-            console.info("All done!");
+        window.setTimeout(drawPoints, 0);
+        //if(max_len < N * N)
+        //    window.setTimeout(drawPoints, 0);
+        //else
+        //    console.info("All done!");
     }
 
     window.setTimeout(drawPoints, 0);
