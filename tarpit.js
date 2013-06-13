@@ -300,6 +300,10 @@ function fillCircle(ctx, cx, cy, r) {
     ctx.fill();
 }
 
+var tarpit_active = true;
+
+var toggle_pause = function () { };
+
 function startup() { 
     var c = document.getElementById('#tarpit');
     var cx = c.getContext("2d");
@@ -359,11 +363,24 @@ function startup() {
         }
 
         max_len += 1;
-        window.setTimeout(drawPoints, 0);
+        if(tarpit_active)
+            window.setTimeout(drawPoints, 0);
         //if(max_len < N * N)
         //    window.setTimeout(drawPoints, 0);
         //else
         //    console.info("All done!");
+    }
+
+    toggle_pause = function() {
+        if(tarpit_active) {
+            tarpit_active = false;
+            document.getElementById("pause_button").innerHTML = "Start";
+        }
+        else {
+            tarpit_active = true;
+            document.getElementById("pause_button").innerHTML = "Pause";
+            window.setTimeout(drawPoints, 0);
+        }
     }
 
     window.setTimeout(drawPoints, 0);
