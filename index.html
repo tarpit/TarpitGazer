@@ -6,18 +6,22 @@
   </head>
   <body>
     <div class="container">
-      <div class="row">
-        <h1>Visualizing the Turing Tarpit</h1>
-      </div>
+      <header>
+        <div class="row">
+          <div class="page-header">
+            <h1>Visualizing the Turing Tarpit</h1>
+          </div>
+        </div>
+      </header>
       <div class="row">
         <div class="span8">
           <canvas id="#tarpit" width="600" height="600"></canvas>
         </div>
-
+        
         <div class="span3">
           <button id="pause_button" onclick="toggle_pause()">Pause</button>
           <h2>What is this?</h2> 
-
+          
           <p>
             This is a way of plotting the behavior of
             many <a href="http://semarch.linguistics.fas.nyu.edu/barker/Iota/">Jot</a>
@@ -27,7 +31,7 @@
             terminate in the allotted time, then we color the circle
             black.
           </p>
-
+          
           <p>
             Programs are generated as random bit strings, since any
             string of bits is a syntactically valid Jot program. We
@@ -41,7 +45,17 @@
             time. Since longer programs tend to take longer to run,
             this is why the circles get larger over time.
           </p>
+        </div>
       </div>
+
+      <footer>
+        <div class="row">
+          <p>Created
+            by <a href="http://blog.theincredibleholk.org">Eric
+            Holk</a> and Jason Hemann</p>
+        </div>
+      </footer>
+
     </div>
 
     <script src="tarpit.js"></script>
