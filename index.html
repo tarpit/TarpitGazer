@@ -16,6 +16,31 @@
 
         <div class="span3">
           <button id="pause_button" onclick="toggle_pause()">Pause</button>
+          <h2>What is this?</h2> 
+
+          <p>
+            This is a way of plotting the behavior of
+            many <a href="http://semarch.linguistics.fas.nyu.edu/barker/Iota/">Jot</a>
+            programs at once. Each circle corresponds to one program,
+            and the size and color of the circle is determined by how
+            long the program takes to execute. If the program does not
+            terminate in the allotted time, then we color the circle
+            black.
+          </p>
+
+          <p>
+            Programs are generated as random bit strings, since any
+            string of bits is a syntactically valid Jot program. We
+            map these strings of bits into a 2D plane using
+            the <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hilbert
+            Curve</a>.
+          </p>
+
+          <p>
+            The maximum program length starts small but increases over
+            time. Since longer programs tend to take longer to run,
+            this is why the circles get larger over time.
+          </p>
       </div>
     </div>
 
