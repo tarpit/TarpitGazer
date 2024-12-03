@@ -33,7 +33,7 @@ This project includes JavaScript and CSS dependencies that are included locally,
 ### jQzoom Plugin
 - **Source**: [https://github.com/hardywalker/jQzoom](https://github.com/hardywalker/jQzoom)
 - **File**: `./js/jquery.jqzoom-core-pack.js`
-- **Downloaded**: [Specify date when downloaded]
+- **Downloaded**: 2024-12-03
 - **Purpose**: Provides zooming functionality for interactive elements.
 - **Notes**: This file is unmodified from its original source.
 
