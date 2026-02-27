@@ -24,18 +24,11 @@ This project includes JavaScript and CSS dependencies that are included locally,
 - **File**: `bootstrap/css/bootstrap.min.css`
 - **Purpose**: Provides responsive styling and layout.
 
-### jQuery
-- **Version**: 1.10.2
-- **Source**: [https://jquery.com/](https://jquery.com/)
-- **File**: `./js/jquery-1.10.2.min.js`
-- **Purpose**: Simplifies DOM manipulation and event handling.
+## Gallery Implementation
 
-### jQzoom Plugin
-- **Source**: [https://github.com/hardywalker/jQzoom](https://github.com/hardywalker/jQzoom)
-- **File**: `./js/jquery.jqzoom-core-pack.js`
-- **Downloaded**: 2024-12-03
-- **Purpose**: Provides zooming functionality for interactive elements.
-- **Notes**: This file is unmodified from its original source.
+- `gallery.html` uses dependency-free JavaScript for thumbnail switching and zoom behavior.
+- Gallery image assets are local files under `imgProd/` and `imgProd/thumbs/`.
+- No jQuery dependency is required for gallery functionality.
 
 ## Authors
 

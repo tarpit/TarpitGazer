@@ -1,96 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Visualizations of Jot Programs</title>
-    <script src="./js/jquery-1.10.2.min.js"></script>
-    <script src="./js/jquery.jqzoom-core-pack.js"></script>
-
-    <link rel="stylesheet" href="./css/jquery.jqzoom.css" type="text/css">
     <style>
-
-      body{margin:0px;padding:0px;font-family:Arial;}
-      a img,:link img,:visited img { border: none; }
-      table { border-collapse: collapse; border-spacing: 0; }
-      :focus { outline: none; }
-      *{margin:0;padding:0;}
-      p, blockquote, dd, dt{margin:0 0 8px 0;line-height:1.5em;}
-      fieldset {padding:0px;padding-left:7px;padding-right:7px;padding-bottom:7px;}
-      fieldset legend{margin-left:15px;padding-left:3px;padding-right:3px;color:#333;}
-      dl dd{margin:0px;}
-      dl dt{}
-
-      .clearfix:after{clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden;}
-      .clearfix{display:block;zoom:1}
-
-
-      ul#thumblist{display:block;}
-      ul#thumblist li{float:left;margin-right:2px;list-style:none;}
-      ul#thumblist li a{display:block;border:1px solid #CCC;}
-      ul#thumblist li a.zoomThumbActive{
-      border:1px solid red;
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f7f7f7;
+        color: #111;
       }
 
-      .jqzoom{
-
-      text-decoration:none;
-      float:left;
+      .page {
+        margin: 0 auto;
+        max-width: 1120px;
+        padding: 24px 20px 40px;
       }
 
+      h1 {
+        margin: 0 0 24px;
+        font-size: 2rem;
+        text-align: center;
+      }
 
+      .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: flex-start;
+      }
 
+      .stage {
+        position: relative;
+        width: min(92vw, 360px);
+      }
 
+      #main-link {
+        display: block;
+        border: 4px solid #666;
+        background: #fff;
+      }
 
+      #main-image {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      #zoom-pane {
+        position: absolute;
+        top: 0;
+        left: calc(100% + 28px);
+        width: min(48vw, 500px);
+        height: min(48vw, 500px);
+        border: 1px solid #999;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        display: none;
+        box-sizing: border-box;
+      }
+
+      #zoom-pane.is-visible {
+        display: block;
+      }
+
+      .thumb-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        max-width: min(92vw, 700px);
+      }
+
+      .thumb {
+        display: block;
+        border: 2px solid #ccc;
+        line-height: 0;
+      }
+
+      .thumb:focus-visible {
+        outline: 2px solid #004ea2;
+        outline-offset: 2px;
+      }
+
+      .thumb.is-active {
+        border-color: #d00;
+      }
+
+      .thumb img {
+        display: block;
+        width: 128px;
+        height: 128px;
+      }
+
+      .help-text {
+        margin: 12px 0 0;
+        color: #444;
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 980px) {
+        #zoom-pane {
+          display: none !important;
+        }
+      }
     </style>
-    <script>
-
-      $(document).ready(function() {
-      $('.jqzoom').jqzoom({
-      zoomType: 'standard',
-      lens:false,
-      preloadImages:false,
-      alwaysOn:false,
-      zoomWidth: 500,
-      zoomHeight: 500,
-      xOffset:90,
-      yOffset:0,
-      position:'right',
-      title:true,
-      showEffect:'fadein',
-      hideEffect:'fadeout',
-      fadeinSpeed:'fast',
-      fadeoutSpeed:'fast'
-      });
-      //$('.jqzoom').jqzoom();
-      });
-
-
-    </script>
   </head>
-
   <body>
-    <br> <br> <br>
-    <center><H1> Tarpit Visualizations Gallery </H1></center>
-    <div class="clearfix" id="content" style="margin-top:50px;margin-left:50px;height:500px;width:300px;" >
-      <div class="clearfix">
-        <a href="imgProd/1024-1024-ao-nf.bmp" class="jqzoom" rel='gal1' title='Tarpit Visualizations'>
-          <img src="imgProd/256-256-ao-nf.bmp"  title='Jot Visualizations'  style="border: 4px solid #666;">
-        </a>
-      </div>
-      <br>
-      <div class="clearfix">
-	<ul id="thumblist" class="clearfix" >
-	  <li><a class="zoomThumbActive" href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: './imgProd/256-256-ao-nf.bmp',largeimage: './imgProd/1024-1024-ao-nf.bmp'}"><img src='imgProd/thumbs/128-128-ao-nf.bmp'> </a></li>
-          <li><a href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: './imgProd/256-256-cbn.bmp',largeimage: './imgProd/1024-1024-cbn.bmp'}"><img src='imgProd/thumbs/128-128-cbn.bmp'></a></li>
-          <li><a href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: './imgProd/256-256-cbv.bmp',largeimage: './imgProd/1024-1024-cbv.bmp'}"><img src='imgProd/thumbs/128-128-cbv.bmp'></a></li>          
-          <li><a href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: './imgProd/256-256-ha-nf.bmp',largeimage: './imgProd/1024-1024-ha-nf.bmp'}"><img src='imgProd/thumbs/128-128-ha-nf.bmp'></a></li>
-          <li><a href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: './imgProd/256-256-hn.bmp',largeimage: './imgProd/1024-1024-hn.bmp'}"><img src='imgProd/thumbs/128-128-hn.bmp'></a></li>
-          <li><a href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: './imgProd/256-256-hnf.bmp',largeimage: './imgProd/1024-1024-hnf.bmp'}"><img src='imgProd/thumbs/128-128-hnf.bmp'></a></li>
-	  <li><a  href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: './imgProd/256-256-whnf.bmp',largeimage: './imgProd/1024-1024-whnf.bmp'}"><img src='imgProd/thumbs/128-128-whnf.bmp'></a></li>
-          <li><a href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: './imgProd/256-256-big-big-ao.bmp',largeimage: './imgProd/1024-1024-big-big-ao.bmp'}"><img src='imgProd/thumbs/128-128-big-big-ao.bmp'></a></li>
-          <li><a href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: './imgProd/256-256-big-big-bn.bmp',largeimage: './imgProd/1024-1024-big-big-bn.bmp'}"><img src='imgProd/thumbs/128-128-big-big-bn.bmp'></a></li> 
-	</ul>
-      </div>
-    </div>
+    <main class="page">
+      <h1>Tarpit Visualizations Gallery</h1>
+      <section class="gallery" aria-label="Tarpit image gallery">
+        <div class="stage">
+          <a id="main-link" href="./imgProd/1024-1024-ao-nf.bmp" target="_blank" rel="noopener noreferrer">
+            <img
+              id="main-image"
+              src="./imgProd/256-256-ao-nf.bmp"
+              alt="Selected Tarpit visualization"
+            >
+          </a>
+          <div id="zoom-pane" aria-hidden="true"></div>
+          <p class="help-text">On desktop: hover the image to zoom. Click the image to open full size.</p>
+        </div>
+        <ul id="thumblist" class="thumb-list">
+          <li><a class="thumb is-active" href="./imgProd/1024-1024-ao-nf.bmp" data-small="./imgProd/256-256-ao-nf.bmp" data-large="./imgProd/1024-1024-ao-nf.bmp"><img src="./imgProd/thumbs/128-128-ao-nf.bmp" alt="AO NF thumbnail"></a></li>
+          <li><a class="thumb" href="./imgProd/1024-1024-cbn.bmp" data-small="./imgProd/256-256-cbn.bmp" data-large="./imgProd/1024-1024-cbn.bmp"><img src="./imgProd/thumbs/128-128-cbn.bmp" alt="CBN thumbnail"></a></li>
+          <li><a class="thumb" href="./imgProd/1024-1024-cbv.bmp" data-small="./imgProd/256-256-cbv.bmp" data-large="./imgProd/1024-1024-cbv.bmp"><img src="./imgProd/thumbs/128-128-cbv.bmp" alt="CBV thumbnail"></a></li>
+          <li><a class="thumb" href="./imgProd/1024-1024-ha-nf.bmp" data-small="./imgProd/256-256-ha-nf.bmp" data-large="./imgProd/1024-1024-ha-nf.bmp"><img src="./imgProd/thumbs/128-128-ha-nf.bmp" alt="HA NF thumbnail"></a></li>
+          <li><a class="thumb" href="./imgProd/1024-1024-hn.bmp" data-small="./imgProd/256-256-hn.bmp" data-large="./imgProd/1024-1024-hn.bmp"><img src="./imgProd/thumbs/128-128-hn.bmp" alt="HN thumbnail"></a></li>
+          <li><a class="thumb" href="./imgProd/1024-1024-hnf.bmp" data-small="./imgProd/256-256-hnf.bmp" data-large="./imgProd/1024-1024-hnf.bmp"><img src="./imgProd/thumbs/128-128-hnf.bmp" alt="HNF thumbnail"></a></li>
+          <li><a class="thumb" href="./imgProd/1024-1024-whnf.bmp" data-small="./imgProd/256-256-whnf.bmp" data-large="./imgProd/1024-1024-whnf.bmp"><img src="./imgProd/thumbs/128-128-whnf.bmp" alt="WHNF thumbnail"></a></li>
+          <li><a class="thumb" href="./imgProd/1024-1024-big-big-ao.bmp" data-small="./imgProd/256-256-big-big-ao.bmp" data-large="./imgProd/1024-1024-big-big-ao.bmp"><img src="./imgProd/thumbs/128-128-big-big-ao.bmp" alt="Big AO thumbnail"></a></li>
+          <li><a class="thumb" href="./imgProd/1024-1024-big-big-bn.bmp" data-small="./imgProd/256-256-big-big-bn.bmp" data-large="./imgProd/1024-1024-big-big-bn.bmp"><img src="./imgProd/thumbs/128-128-big-big-bn.bmp" alt="Big BN thumbnail"></a></li>
+        </ul>
+      </section>
+    </main>
+    <script>
+      (function () {
+        var mainLink = document.getElementById("main-link");
+        var mainImage = document.getElementById("main-image");
+        var zoomPane = document.getElementById("zoom-pane");
+        var thumbs = Array.prototype.slice.call(document.querySelectorAll(".thumb"));
+        var imageDimensionCache = {};
+        var activeLargeSize = { width: 0, height: 0 };
+        var requestVersion = 0;
+
+        function isTouchOrSmallScreen() {
+          return window.matchMedia("(hover: none), (pointer: coarse), (max-width: 980px)").matches;
+        }
+
+        function hideZoom() {
+          zoomPane.classList.remove("is-visible");
+        }
+
+        function loadImageDimensions(url) {
+          if (imageDimensionCache[url]) {
+            return Promise.resolve(imageDimensionCache[url]);
+          }
+
+          return new Promise(function (resolve) {
+            var probe = new Image();
+            probe.onload = function () {
+              var size = { width: probe.naturalWidth, height: probe.naturalHeight };
+              imageDimensionCache[url] = size;
+              resolve(size);
+            };
+            probe.onerror = function () {
+              var fallback = { width: 0, height: 0 };
+              imageDimensionCache[url] = fallback;
+              resolve(fallback);
+            };
+            probe.src = url;
+          });
+        }
+
+        function setActiveThumb(activeThumb) {
+          thumbs.forEach(function (thumb) {
+            thumb.classList.toggle("is-active", thumb === activeThumb);
+          });
+        }
+
+        function updateZoomPosition(event) {
+          if (isTouchOrSmallScreen()) {
+            hideZoom();
+            return;
+          }
+
+          var rect = mainImage.getBoundingClientRect();
+          var localX = event.clientX - rect.left;
+          var localY = event.clientY - rect.top;
+          if (localX < 0 || localY < 0 || localX > rect.width || localY > rect.height) {
+            hideZoom();
+            return;
+          }
+
+          var naturalSmallWidth = mainImage.naturalWidth || rect.width;
+          var naturalSmallHeight = mainImage.naturalHeight || rect.height;
+          var scaleX = activeLargeSize.width && naturalSmallWidth ? activeLargeSize.width / naturalSmallWidth : 2;
+          var scaleY = activeLargeSize.height && naturalSmallHeight ? activeLargeSize.height / naturalSmallHeight : 2;
+
+          zoomPane.style.backgroundSize = (rect.width * scaleX) + "px " + (rect.height * scaleY) + "px";
+          zoomPane.style.backgroundPosition = (localX / rect.width) * 100 + "% " + (localY / rect.height) * 100 + "%";
+          zoomPane.classList.add("is-visible");
+        }
+
+        function selectThumb(thumb) {
+          var smallImage = thumb.dataset.small;
+          var largeImage = thumb.dataset.large;
+          if (!smallImage || !largeImage) {
+            return;
+          }
+
+          setActiveThumb(thumb);
+          mainImage.src = smallImage;
+          mainLink.href = largeImage;
+          zoomPane.style.backgroundImage = "url('" + largeImage + "')";
+          hideZoom();
+
+          requestVersion += 1;
+          var thisRequest = requestVersion;
+          loadImageDimensions(largeImage).then(function (size) {
+            if (thisRequest !== requestVersion) {
+              return;
+            }
+            activeLargeSize = size;
+          });
+        }
+
+        thumbs.forEach(function (thumb) {
+          thumb.addEventListener("click", function (event) {
+            event.preventDefault();
+            selectThumb(thumb);
+          });
+
+          thumb.addEventListener("keydown", function (event) {
+            if (event.key === " ") {
+              event.preventDefault();
+              selectThumb(thumb);
+            }
+          });
+        });
+
+        mainImage.addEventListener("mousemove", updateZoomPosition);
+        mainImage.addEventListener("mouseenter", updateZoomPosition);
+        mainImage.addEventListener("mouseleave", hideZoom);
+        mainLink.addEventListener("click", function () {
+          hideZoom();
+        });
+        window.addEventListener("resize", hideZoom);
+
+        if (thumbs.length > 0) {
+          selectThumb(thumbs[0]);
+        }
+      })();
+    </script>
   </body>
 </html>
